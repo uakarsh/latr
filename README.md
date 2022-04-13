@@ -9,7 +9,7 @@ LaTr improves robustness towards OCR errors, a common reason for failure cases i
 The official implementation was not released by the authors.
 
 
-NOTE: I have tried my best to implement this paper, and have taken minimum assumptions while implementing, but, one of the essential part of any implementation is to provide pre-trained weights and show the results of your implementation on the dataset mentioned in the paper, however due to resource limitation from my side, I won't be able to provide pre-trained weights. However, I would try to include scripts in the example, so that if someone has the resources, they can use the scripts to obtain pre-trained weights and share it. Open to all feedbacks, and hope this implementation founds to be useful to the community.
+NOTE: I have tried my best to implement this paper, and have taken minimum assumptions while implementing, but, one of the essential part of any implementation is to provide pre-trained weights and show the results of your implementation on the dataset mentioned in the paper, however due to resource limitation from my side, I won't be able to provide pre-trained weights. However, I would try to include scripts in the example, so that if someone has the resources, they can use the scripts to obtain pre-trained weights and share it. Open to all feedbacks, and hope this implementation turns out to be useful to the community.
 
 ## Install
 
