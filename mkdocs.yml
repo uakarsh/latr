@@ -1,0 +1,15 @@
+site_name: LaTr
+site_url: https://uakarsh.github.io/latr
+copyright: MIT
+theme:
+  name: "material"
+  palette:
+    primary: "blue"
+    accent: "blue"
+
+repo_name: uakarsh/latr
+repo_url: https://github.com/uakarsh/latr
+
+
+nav:
+    - Home: README.md
