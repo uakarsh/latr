@@ -1,21 +1,20 @@
 from setuptools import setup, find_packages
 
 setup(
-  name = 'docformer',
+  name = 'latr',
   packages = find_packages(exclude=['examples']),
   version = '0.0.1',
   license='MIT',
-  description = 'DocFormer: End-to-End Transformer for Document Understanding',
-  author = 'Akarsh Upadhay, Shabie Iqbal',
-  author_email = 'akarshupadhyayabc@gmail.com, shabieiqbal@gmail.com',
-  url = 'https://github.com/shabie/docformer',
+  description = 'LaTr: Layout-aware transformer for scene-text VQA',
+  author = 'Akarsh Upadhay',
+  author_email = 'akarshupadhyayabc@gmail.com',
+  url = 'https://github.com/uakarsh/latr',
   keywords = [
     'artificial intelligence',
     'attention mechanism',
-    'document understanding',
+    'scene-text VQA',
   ],
   install_requires=[
-    'einops>=0.3',
     'torch>=1.6',
     'torchvision',
     'transformers',
