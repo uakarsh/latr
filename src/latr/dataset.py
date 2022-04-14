@@ -1,7 +1,6 @@
 import os
 import json
 import numpy as np
-from google.colab.patches import cv2_imshow
 import pytesseract
 from PIL import Image, ImageDraw
 
