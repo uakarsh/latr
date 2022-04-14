@@ -18,6 +18,8 @@ setup(
     'torch>=1.6',
     'torchvision',
     'transformers',
+    'sentencepiece==0.1.91',
+    'Pillow==7.1.2'
   ],
   classifiers=[
     'Development Status :: 4 - Beta',
