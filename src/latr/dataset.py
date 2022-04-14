@@ -44,7 +44,7 @@ def get_specific_file(path, last_entry = 'tif'):
 ## Function: 4
 
 
-def get_tokens_with_boxes(unnormalized_word_boxes, list_of_words, tokenizer,image_size, pad_token_id = 0, pad_token_box = [0, 0, 0, 0], max_seq_len = 512):
+def get_tokens_with_boxes(unnormalized_word_boxes, list_of_words, tokenizer, pad_token_id = 0, pad_token_box = [0, 0, 0, 0], max_seq_len = 512):
     
     '''
     This function returns two items:
@@ -169,7 +169,6 @@ def create_features(
   boxes, tokenized_words = get_tokens_with_boxes(unnormalized_word_boxes = bounding_box,
                                                list_of_words = words, 
                                                tokenizer = tokenizer,
-                                               image_size = [width, height],
                                                pad_token_id = 0,
                                                pad_token_box = PAD_TOKEN_BOX,
                                                max_seq_len = max_seq_len
