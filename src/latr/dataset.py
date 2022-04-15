@@ -143,7 +143,7 @@ def create_features(
                                                tokenizer = tokenizer,
                                                pad_token_id = 0,
                                                pad_token_box = PAD_TOKEN_BOX,
-                                               max_seq_len = max_seq_len
+                                               max_seq_len = max_seq_length
                                                )
 
 
