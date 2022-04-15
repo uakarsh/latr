@@ -125,18 +125,19 @@ def create_features(
   width_old, height_old = img.size
   img = img.resize(target_size)
   width, height = img.size
+  
   ## Rescaling the bounding box as per the image size
-  bounding_box = list(map(lambda x: resize_align_bbox(x,width_old,height_old, width, height), bounding_box))
+  
 
   if (use_ocr == False) and (bounding_box == None or words == None):
     raise Exception('Please provide the bounding box and words or pass the argument "use_ocr" = True')
-  
+
   if use_ocr == True:
-    entries = apply_ocr(img,img.size)
+    entries = apply_ocr(image_path)
     bounding_box = entries["bbox"]
     words = entries["words"]
   
-
+  bounding_box = list(map(lambda x: resize_align_bbox(x,width_old,height_old, width, height), bounding_box))
   boxes, tokenized_words = get_tokens_with_boxes(unnormalized_word_boxes = bounding_box,
                                                list_of_words = words, 
                                                tokenizer = tokenizer,
