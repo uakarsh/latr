@@ -1,10 +1,11 @@
 import torch.nn as nn
-from transformers import T5ForConditionalGeneration
+import torch
+from transformers import T5ForConditionalGeneration, ViTModel
 
 # Defining the pytorch model
 
 class LaTr_for_pretraining(nn.Module):
-    def __init__(self, config):
+    def __init__(self, config, classify = False):
 
       super(LaTr_for_pretraining, self).__init__()
       self.vocab_size = config['vocab_size']
@@ -29,6 +30,7 @@ class LaTr_for_pretraining(nn.Module):
       self.width_emb = nn.Embedding(config['max_2d_position_embeddings'], config['hidden_state'])
       self.height_emb = nn.Embedding(config['max_2d_position_embeddings'], config['hidden_state'])
 
+      self.classify = classify
       self.classification_layer = nn.Linear(config['hidden_state'], config['classes'])
 
     def forward(self, tokens, coordinates, predict_proba = False, predict_class = False):
@@ -54,7 +56,9 @@ class LaTr_for_pretraining(nn.Module):
         for layer in self.list_decoder:
           total_feat = layer(total_feat)[0]
         total_feat = self.residue_decoder(total_feat)
-        total_feat = self.classification_layer(total_feat)
+
+        if  self.classify :
+          total_feat = self.classification_layer(total_feat)
 
         if predict_proba:
           return total_feat.softmax(axis = -1)
@@ -63,3 +67,31 @@ class LaTr_for_pretraining(nn.Module):
           return total_feat.argmax(axis = -1)
 
         return total_feat
+
+
+
+class LaTr_for_finetuning(nn.Module):
+  def __init__(self, config, address_to_pre_trained_weights = None):
+    super(LaTr_for_finetuning, self).__init__()
+
+    self.config = config
+    self.vocab_size = config['vocab_size']
+    self.question_emb = nn.Embedding(config['vocab_size'], config['hidden_state'])
+
+    self.pre_training_model = LaTr_for_pretraining(config)
+    if address_to_pre_trained_weights is not None:
+      self.pre_training_model.load_state_dict(torch.load(address_to_pre_trained_weights))
+    self.vit = ViTModel.from_pretrained("google/vit-base-patch16-224-in21k")
+  
+    ## In the fine-tuning stage of vit, except the last layer, all the layers were freezed
+    self.classification_head = nn.Linear(config['hidden_state'], config['vocab_size'])
+
+  def forward(self, lang_vect, spatial_vect, quest_vect, img_vect):
+
+    img_feat = self.vit(img_vect).last_hidden_state
+    spatial_lang_feat = self.pre_training_model(lang_vect,spatial_vect)
+    quest_feat = self.question_emb(quest_vect)
+    final_feat = torch.cat([img_feat, spatial_lang_feat,quest_feat ], axis = -2)
+    answer_vector = self.classification_head(final_feat)[:, :config['seq_len'], :]
+
+    return answer_vector
