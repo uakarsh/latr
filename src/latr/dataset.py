@@ -106,33 +106,6 @@ def apply_ocr(image_fp):
     assert len(words) == len(actual_bboxes)
     return {"words": words, "bbox": actual_bboxes}
 
-## Function: 6
-## If the OCR is not provided, this function would help in extracting OCR
-
-
-def apply_ocr(image_fp):
-    """
-    Returns words and its bounding boxes from an image
-    """
-    img = Image.open(tif_path).convert("RGB")
-    img = img.resize(resize_shape)
-    width, height = img.size
-
-    ocr_df = pytesseract.image_to_data(img, output_type="data.frame")
-    ocr_df = ocr_df.dropna().reset_index(drop=True)
-    float_cols = ocr_df.select_dtypes("float").columns
-    ocr_df[float_cols] = ocr_df[float_cols].round(0).astype(int)
-    ocr_df = ocr_df.replace(r"^\s*$", np.nan, regex=True)
-    ocr_df = ocr_df.dropna().reset_index(drop=True)
-    words = list(ocr_df.text.apply(lambda x: str(x).strip()))
-    actual_bboxes = ocr_df.apply(get_topleft_bottomright_coordinates, axis=1).values.tolist()
-
-    ## Normalizing the bounding box
-    actual_bboxes = list(map(lambda x: resize_align_bbox(x, width, height, 1,1), actual_bboxes))
-
-    # add as extra columns
-    assert len(words) == len(actual_bboxes)
-    return {"words": words, "bbox": actual_bboxes}
 
 ## Function: 7
 ## Merging all the above functions, for the purpose of extracting the image, bounding box and the tokens (sentence wise)
