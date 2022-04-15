@@ -82,13 +82,11 @@ def get_topleft_bottomright_coordinates(df_row):
 ## If the OCR is not provided, this function would help in extracting OCR
 
 
-def apply_ocr(image_fp):
+def apply_ocr(tif_path):
     """
     Returns words and its bounding boxes from an image
     """
     img = Image.open(tif_path).convert("RGB")
-    img = img.resize(resize_shape)
-    width, height = img.size
 
     ocr_df = pytesseract.image_to_data(img, output_type="data.frame")
     ocr_df = ocr_df.dropna().reset_index(drop=True)
@@ -98,9 +96,6 @@ def apply_ocr(image_fp):
     ocr_df = ocr_df.dropna().reset_index(drop=True)
     words = list(ocr_df.text.apply(lambda x: str(x).strip()))
     actual_bboxes = ocr_df.apply(get_topleft_bottomright_coordinates, axis=1).values.tolist()
-
-    ## Normalizing the bounding box
-    actual_bboxes = list(map(lambda x: resize_align_bbox(x, width, height, 1,1), actual_bboxes))
 
     # add as extra columns
     assert len(words) == len(actual_bboxes)
@@ -122,22 +117,26 @@ def create_features(
     ):
   
   '''
-  We assume that the bounding box provided are normalized, so that we just need to scale it up
+  We assume that the bounding box provided are given as per the image scale (i.e not normalized), so that we just need to scale it as per the ratio
   '''
 
 
   img = Image.open(image_path).convert("RGB")
+  width_old, height_old = img.size
   img = img.resize(target_size)
   width, height = img.size
-  
+  ## Rescaling the bounding box as per the image size
+  bounding_box = list(map(lambda x: resize_align_bbox(x,width_old,height_old, width, height), bounding_box))
+
   if (use_ocr == False) and (bounding_box == None or words == None):
     raise Exception('Please provide the bounding box and words or pass the argument "use_ocr" = True')
   
   if use_ocr == True:
-    entries = apply_ocr(img)
+    entries = apply_ocr(img,img.size)
     bounding_box = entries["bbox"]
     words = entries["words"]
   
+
   boxes, tokenized_words = get_tokens_with_boxes(unnormalized_word_boxes = bounding_box,
                                                list_of_words = words, 
                                                tokenizer = tokenizer,
@@ -145,5 +144,6 @@ def create_features(
                                                pad_token_box = PAD_TOKEN_BOX,
                                                max_seq_len = max_seq_len
                                                )
+
 
   return img, boxes, tokenized_words
