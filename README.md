@@ -23,8 +23,10 @@ pip install 'Pillow==7.1.2'
 
 ## Usage
 
-```python
+```
 
+For pre-training task: Refer to the examples section
+For fine-tuning task: Would be shortly released
 ```
 
 ##  License
