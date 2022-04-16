@@ -69,7 +69,6 @@ class LaTr_for_pretraining(nn.Module):
         return total_feat
 
 
-
 class LaTr_for_finetuning(nn.Module):
   def __init__(self, config, address_to_pre_trained_weights = None):
     super(LaTr_for_finetuning, self).__init__()
@@ -84,14 +83,43 @@ class LaTr_for_finetuning(nn.Module):
     self.vit = ViTModel.from_pretrained("google/vit-base-patch16-224-in21k")
   
     ## In the fine-tuning stage of vit, except the last layer, all the layers were freezed
+
     self.classification_head = nn.Linear(config['hidden_state'], config['vocab_size'])
 
   def forward(self, lang_vect, spatial_vect, quest_vect, img_vect):
 
+    
+    ## The below block of code calculates the language and spatial featuer
+    embeded_feature =     self.pre_training_model.language_emb(lang_vect)
+    top_left_x_feat =     self.pre_training_model.top_left_x(spatial_vect[:,:, 0])
+    top_left_y_feat =     self.pre_training_model.top_left_y(spatial_vect[:,:, 1])
+    bottom_right_x_feat = self.pre_training_model.bottom_right_x(spatial_vect[:,:, 2])
+    bottom_right_y_feat = self.pre_training_model.bottom_right_y(spatial_vect[:,:, 3])
+    width_feat =          self.pre_training_model.width_emb(spatial_vect[:,:, 4])
+    height_feat =         self.pre_training_model.height_emb(spatial_vect[:,:, 5])
+
+    spatial_lang_feat = embeded_feature + top_left_x_feat + top_left_y_feat + bottom_right_x_feat + bottom_right_y_feat + width_feat + height_feat
+
+
+    ## Extracting the image feature, using the Vision Transformer
     img_feat = self.vit(img_vect).last_hidden_state
-    spatial_lang_feat = self.pre_training_model(lang_vect,spatial_vect)
+    
+    ## Extracting the question vector
     quest_feat = self.question_emb(quest_vect)
+
+    ## Concating the three features, and then passing it through the T5 Transformer
     final_feat = torch.cat([img_feat, spatial_lang_feat,quest_feat ], axis = -2)
-    answer_vector = self.classification_head(final_feat)[:, :config['seq_len'], :]
+
+    ## Passing through the T5 Transformer
+    for layer in self.pre_training_model.list_encoder:
+        final_feat = layer(final_feat)[0]
+
+    final_feat = self.pre_training_model.residue_encoder(final_feat)
+
+    for layer in self.pre_training_model.list_decoder:
+        final_feat = layer(final_feat)[0]
+    final_feat = self.pre_training_model.residue_decoder(final_feat)
+
+    answer_vector = self.classification_head(final_feat)[:, :self.config['seq_len'], :]
 
     return answer_vector
