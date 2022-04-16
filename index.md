@@ -1,18 +1,41 @@
 # LaTr - PyTorch
 
-![Latr architecture](latr-architecture.jpg)
+![latr architecture](latr-architecture.jpg)
 
 Implementation of [LaTr: Layout-aware transformer for scene-text VQA](https://arxiv.org/abs/2112.12494),a novel multimodal architecture for Scene Text Visual Question Answering (STVQA).
 
+LaTr improves robustness towards OCR errors, a common reason for failure cases in STVQA. In addition, by leveraging a vision transformer, LaTr eliminate the need for an external object detector. LaTr outperforms state-of-the-art STVQA methods on multiple datasets. In particular, +7.6% on TextVQA, +10.8% on ST-VQA and +4.0% on OCR-VQA (all absolute accuracy numbers).
+
 The official implementation was not released by the authors.
+
+
+NOTE: I have tried my best to implement this paper, and have taken minimum assumptions while implementing, but, one of the essential part of any implementation is to provide pre-trained weights and show the results of your implementation on the dataset mentioned in the paper, however due to resource limitation from my side, I won't be able to provide pre-trained weights. However, I would try to include scripts in the example, so that if someone has the resources, they can use the scripts to obtain pre-trained weights and share it. Open to all feedbacks, and hope this implementation turns out to be useful to the community.
 
 ## Install
 
+```python
+pip install transformers
+pip install sentencepiece==0.1.91
+pip install pytesseract
+sudo apt install tesseract-ocr
+pip install 'Pillow==7.1.2'
+```
 
 ## Usage
 
-See `examples` for usage.
+```
 
+For pre-training task: Refer to the examples section
+For fine-tuning task: Would be shortly released
+```
+
+##  License
+
+MIT
+
+## Maintainers
+
+- [uakarsh](https://github.com/uakarsh)
 
 ## Contribute
 
@@ -30,5 +53,4 @@ See `examples` for usage.
   year = {2021},
   copyright = {Creative Commons Attribution 4.0 International}
 }
-
 ```
