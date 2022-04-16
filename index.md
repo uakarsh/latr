@@ -1,6 +1,6 @@
 # LaTr - PyTorch
 
-![latr architecture](images/latr-architecture.jpg)
+![Latr architecture](images/latr-architecture.jpg)
 
 Implementation of [LaTr: Layout-aware transformer for scene-text VQA](https://arxiv.org/abs/2112.12494),a novel multimodal architecture for Scene Text Visual Question Answering (STVQA).
 
