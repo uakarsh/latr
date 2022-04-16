@@ -14,11 +14,11 @@ NOTE: I have tried my best to implement this paper, and have taken minimum assum
 ## Install
 
 ```python
-!pip install transformers
-!pip install sentencepiece==0.1.91
-!pip install pytesseract
-!sudo apt install tesseract-ocr
-!pip install 'Pillow==7.1.2'
+pip install transformers
+pip install sentencepiece==0.1.91
+pip install pytesseract
+sudo apt install tesseract-ocr
+pip install 'Pillow==7.1.2'
 ```
 
 ## Usage
