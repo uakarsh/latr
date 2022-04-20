@@ -75,7 +75,6 @@ class LaTr_for_finetuning(nn.Module):
 
     self.config = config
     self.vocab_size = config['vocab_size']
-    self.question_emb = nn.Embedding(config['vocab_size'], config['hidden_state'])
 
     self.pre_training_model = LaTr_for_pretraining(config)
     if address_to_pre_trained_weights is not None:
@@ -105,7 +104,7 @@ class LaTr_for_finetuning(nn.Module):
     img_feat = self.vit(img_vect).last_hidden_state
     
     ## Extracting the question vector
-    quest_feat = self.question_emb(quest_vect)
+    quest_feat = self.pre_training_model.language_emb(quest_vect)
 
     ## Concating the three features, and then passing it through the T5 Transformer
     final_feat = torch.cat([img_feat, spatial_lang_feat,quest_feat ], axis = -2)
