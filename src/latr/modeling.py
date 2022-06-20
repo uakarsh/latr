@@ -83,7 +83,7 @@ class LaTr_for_finetuning(nn.Module):
   
     ## In the fine-tuning stage of vit, except the last layer, all the layers were freezed
 
-    self.classification_head = nn.Linear(config['hidden_state'], config['vocab_size'])
+    self.classification_head = nn.Linear(config['hidden_state'], config['classes'])
 
   def forward(self, lang_vect, spatial_vect, quest_vect, img_vect):
 
