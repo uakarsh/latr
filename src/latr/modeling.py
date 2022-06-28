@@ -21,7 +21,8 @@ class LaTr_for_pretraining(nn.Module):
       self.list_decoder = nn.Sequential(*list(dummy_decoder[0]))
       self.residue_decoder = nn.Sequential(*list(dummy_decoder[1:]))
 
-      self.language_emb = nn.Embedding(config['vocab_size'], config['hidden_state'])
+      ## We use the embeddings of T5 for encoding the tokenized words
+      self.language_emb = nn.Embedding.from_pretrained(model.shared.weight)  
 
       self.top_left_x = nn.Embedding(config['max_2d_position_embeddings'], config['hidden_state'])
       self.bottom_right_x = nn.Embedding(config['max_2d_position_embeddings'], config['hidden_state'])
