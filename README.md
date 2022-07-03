@@ -23,10 +23,9 @@ pip install 'Pillow==7.1.2'
 
 ## Usage
 
-```
-For pre-training task: Refer [here](https://github.com/uakarsh/latr/blob/main/examples/LaTr_PreTraining.ipynb)
-The training of LaTr from scratch with PyTorch Lightening can be referred [here](https://github.com/uakarsh/latr/tree/main/examples/textvqa)
-```
+* For pre-training task: Refer [here](https://github.com/uakarsh/latr/blob/main/examples/LaTr_PreTraining.ipynb)
+* The training of LaTr from scratch with PyTorch Lightening can be referred [here](https://github.com/uakarsh/latr/tree/main/examples/textvqa)
+
 
 ## Results:
 
