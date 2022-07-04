@@ -23,11 +23,35 @@ pip install 'Pillow==7.1.2'
 
 ## Usage
 
+* For pre-training task: Refer [here](https://github.com/uakarsh/latr/blob/main/examples/LaTr_PreTraining.ipynb)
+* The training of LaTr from scratch with PyTorch Lightening can be referred [here](https://github.com/uakarsh/latr/tree/main/examples/textvqa)
+
+
+## Results:
+
+Currently, I used the following configurations:
+
+```python
+classes : 32128
+hidden_state: 768
+max_2d_position_embeddings: 1001
+seq_len: 512
+t5_model: "t5-base"
+vocab_size: 32128
+hidden_state: 768
+learning_rate: 0.0001
+max_2d_position_embeddings: 1001
+max_steps: 50000
+seq_len: 512
+t5_model: "t5-base"
+vocab_size: 32128
+batch size: 1  (I think, this is a major difference between the training of mine and authors)
 ```
 
-For pre-training task: Refer to the examples section
-For fine-tuning task: Would be shortly released
-```
+And have been able to obtain a validation accuracy of: 27.42 percentage (authors were able to achieve 44.03 percentage)
+
+* The results of all the experiments can be found out [here](https://wandb.ai/iakarshu/VQA%20with%20LaTr?workspace=), note that I was not able to save the checkpoint of that (some kaggle error), but I initialized the weights from [here](https://www.kaggleusercontent.com/kf/99663112/eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..JDENcUm0rUk0qGihFn1QuQ.wKuoRF1z1AmNCwFoZJN3SSFRMNKRvZLlGhzAykt7njLW3OUwV-TQCk9fbUx27ITQ6TpBWeYZl7G3mVorvDQquZfcYHoFam8yZpZ1zl9hmX_YQdZ1KtNrlMv0mKCpr2r6QH7WtUCbi0nWOG3R_31GJHV42pyUXJ1EII9KgnSmjKcTVNjRl7SdrwVnUW8caVtGDTZeMZuS8HH1T_-6pInZMwaZvekEvRqgIM2TArZH-0OVwIszKdfbQftcPz2f9NzpSHeu9bq6ZxhjUcUTCdNJxeNeIcxv4jnfTW146_r_zzmt4SWo8QSsG-zQAPAsxv5JL9nZiP65OUe4uNeWSO-t4ChzpRkUQLnv01ptWkzK0p9j00-xIlC36F5mXXtpbvLHlLXvkBKlrJ4NKEN76RdYAv77sbwoMQZ8RVHRj7-QYcBzaPZgTUNlRi65FnA30v0_UZIMreHyN0H1K7Kdj34TS8_pY058rYVhQY9avwuc32krDOoSG-sQ2FZA7Nvs5CoH0H6ejyvrsMMhCBbROkZDiD0jzeKwlPi-267OqjEMsKar77LsDgzkhccxp6Zgr8ZHTkEnVE553A8Yz7J76Q5vFx-M1ZXhoJIVfZcdSSpoI_jih7woeLdJVWIvctvE1aof88M1PmHPmB9qS2V9S10tK1MBIGeay06xW83d9dd5qD93ugxKZISxEg-IJddlSuII.o1fCKlUduAUrwtk1ANYLug/models/epoch=0-step=34602.ckpt)
+* The script of the same can be found out [here](https://www.kaggle.com/code/akarshu121/latr-textvqa-training-with-wandb)
 
 ##  License
 
