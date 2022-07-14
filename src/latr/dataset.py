@@ -107,22 +107,20 @@ def apply_ocr(tif_path):
 
 
 def create_features(
-    img,
+    img_path,
     tokenizer,
     target_size = (1000, 1000),
     max_seq_length=512,
     use_ocr = False,
     bounding_box = None,
     words = None,
-    read_img = False
     ):
   
   '''
   We assume that the bounding box provided are given as per the image scale (i.e not normalized), so that we just need to scale it as per the ratio
   '''
 
-  if read_img == True:
-      img = Image.open(img).convert("RGB")
+  img = Image.open(img_path).convert("RGB")
   width_old, height_old = img.size
   img = img.resize(target_size)
   width, height = img.size
@@ -134,7 +132,7 @@ def create_features(
     raise Exception('Please provide the bounding box and words or pass the argument "use_ocr" = True')
 
   if use_ocr == True:
-    entries = apply_ocr(img)
+    entries = apply_ocr(img_path)
     bounding_box = entries["bbox"]
     words = entries["words"]
   
