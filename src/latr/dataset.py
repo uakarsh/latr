@@ -134,7 +134,7 @@ def create_features(
     raise Exception('Please provide the bounding box and words or pass the argument "use_ocr" = True')
 
   if use_ocr == True:
-    entries = apply_ocr(image_path)
+    entries = apply_ocr(img)
     bounding_box = entries["bbox"]
     words = entries["words"]
   
