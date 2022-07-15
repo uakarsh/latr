@@ -14,6 +14,8 @@ NOTE: I have tried my best to implement this paper, and have taken minimum assum
 ## Demo
 ![latr architecture](images/demo.gif)
 
+An interactive demo for the same can be found out [here](https://huggingface.co/spaces/iakarshu/latr-vqa)
+
 ## Install
 
 ```python
