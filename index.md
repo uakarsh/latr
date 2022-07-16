@@ -11,6 +11,11 @@ The official implementation was not released by the authors.
 
 NOTE: I have tried my best to implement this paper, and have taken minimum assumptions while implementing, but, one of the essential part of any implementation is to provide pre-trained weights and show the results of your implementation on the dataset mentioned in the paper, however due to resource limitation from my side, I won't be able to provide pre-trained weights. However, I would try to include scripts in the example, so that if someone has the resources, they can use the scripts to obtain pre-trained weights and share it. Open to all feedbacks, and hope this implementation turns out to be useful to the community.
 
+## Demo
+![latr architecture](demo.gif)
+
+An interactive demo for the same can be found out [here](https://huggingface.co/spaces/iakarshu/latr-vqa)
+
 ## Install
 
 ```python
