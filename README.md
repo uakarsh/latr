@@ -56,6 +56,13 @@ batch size: 1  (I think, this is a major difference between the training of mine
 And have been able to obtain a validation accuracy of: 27.42 percentage (authors were able to achieve 44.03 percentage)
 
 * The results of all the experiments can be found out [here](https://wandb.ai/iakarshu/VQA%20with%20LaTr?workspace=), note that I was not able to save the checkpoint of that (some kaggle error), but I initialized the weights from [here](https://www.kaggleusercontent.com/kf/99663112/eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..JDENcUm0rUk0qGihFn1QuQ.wKuoRF1z1AmNCwFoZJN3SSFRMNKRvZLlGhzAykt7njLW3OUwV-TQCk9fbUx27ITQ6TpBWeYZl7G3mVorvDQquZfcYHoFam8yZpZ1zl9hmX_YQdZ1KtNrlMv0mKCpr2r6QH7WtUCbi0nWOG3R_31GJHV42pyUXJ1EII9KgnSmjKcTVNjRl7SdrwVnUW8caVtGDTZeMZuS8HH1T_-6pInZMwaZvekEvRqgIM2TArZH-0OVwIszKdfbQftcPz2f9NzpSHeu9bq6ZxhjUcUTCdNJxeNeIcxv4jnfTW146_r_zzmt4SWo8QSsG-zQAPAsxv5JL9nZiP65OUe4uNeWSO-t4ChzpRkUQLnv01ptWkzK0p9j00-xIlC36F5mXXtpbvLHlLXvkBKlrJ4NKEN76RdYAv77sbwoMQZ8RVHRj7-QYcBzaPZgTUNlRi65FnA30v0_UZIMreHyN0H1K7Kdj34TS8_pY058rYVhQY9avwuc32krDOoSG-sQ2FZA7Nvs5CoH0H6ejyvrsMMhCBbROkZDiD0jzeKwlPi-267OqjEMsKar77LsDgzkhccxp6Zgr8ZHTkEnVE553A8Yz7J76Q5vFx-M1ZXhoJIVfZcdSSpoI_jih7woeLdJVWIvctvE1aof88M1PmHPmB9qS2V9S10tK1MBIGeay06xW83d9dd5qD93ugxKZISxEg-IJddlSuII.o1fCKlUduAUrwtk1ANYLug/models/epoch=0-step=34602.ckpt)
+
+The same weights can be downloaded by the command as follows:
+```
+pip install gdown
+gdown 192-AETChd2FoNfut0hkLRwcLMfd5-uIj
+```
+
 * The script of the same can be found out [here](https://www.kaggle.com/code/akarshu121/latr-textvqa-training-with-wandb)
 
 ##  License
