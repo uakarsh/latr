@@ -57,11 +57,17 @@ def get_tokens_with_boxes(unnormalized_word_boxes, list_of_words, tokenizer, pad
     length_of_box = len(unnormalized_word_boxes)
     unnormalized_token_boxes = []
     tokenized_words = []
-
+    
+    idx = 0 
     for box, word in zip(unnormalized_word_boxes, list_of_words):
+      
+      if idx != 0:
+        word = " " + word
+        
       current_tokens = tokenizer(word, add_special_tokens = False).input_ids
       unnormalized_token_boxes.extend([box]*len(current_tokens))
       tokenized_words.extend(current_tokens)
+      idx += 1
 
     if len(unnormalized_token_boxes)<max_seq_len:
         unnormalized_token_boxes.extend([pad_token_box] * (max_seq_len-len(unnormalized_token_boxes)))
