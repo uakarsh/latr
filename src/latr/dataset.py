@@ -117,7 +117,7 @@ def create_features(
     tokenizer,
     target_size = (1000, 1000),
     max_seq_length=512,
-    use_ocr = False,
+    use_ocr = True,
     bounding_box = None,
     words = None,
     ):
