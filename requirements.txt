@@ -1,0 +1,4 @@
+transformers
+sentencepiece==0.1.91
+pytesseract
+Pillow==7.1.2
