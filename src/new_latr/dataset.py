@@ -236,9 +236,11 @@ class TextVQA(Dataset):
         # tokenized_words = torch.as_tensor(tokenized_words, dtype=torch.int32)
 
         if self.transform is not None:
-            img = self.transform(img)
-            if 'pixel_values' in img.keys():
+            try:
+                img = self.transform(img)
                 img = img['pixel_values'][0] ## This would be a vit processor
+            except:
+                img = self.transform(img)
         else:
             img = transforms.ToTensor()(img)
 
