@@ -12,6 +12,14 @@ def normalize_box(box, width, height, size=1000):
     """
     Takes a bounding box and normalizes it to a thousand pixels. If you notice it is
     just like calculating percentage except takes 1000 instead of 100.
+
+    Arguments:
+        box: A list of bounding box coordinates
+        width: The width of the image
+        height: The height of the image
+        size: The size to normalize to
+    Returns:
+        A list of normalized bounding box coordinates
     """
     return [
         int(size * (box[0] / width)),
@@ -24,6 +32,20 @@ def normalize_box(box, width, height, size=1000):
 # Reference: https://github.com/uakarsh/TiLT-Implementation/blob/main/src/dataset.py
 
 def get_tokens_with_boxes(unnormalized_word_boxes, list_of_words, tokenizer, pad_token_box=[0, 0, 0, 0], max_seq_len=-1, eos_token_box=[0, 0, 1000, 1000]):
+
+    '''
+    A function to get the tokens with the bounding boxes
+    Arguments:
+        unnormalized_word_boxes: A list of bounding boxes
+        list_of_words: A list of words
+        tokenizer: The tokenizer to use
+        pad_token_box: The padding token box
+        max_seq_len: The maximum sequence length, not padded if max_seq_len is -1
+        eos_token_box: The end of sequence token box
+    Returns:
+        A list of input_ids, bbox_according_to_tokenizer, attention_mask
+    '''
+
     # 2. Performing the semantic pre-processing
     encoding = tokenizer(list_of_words, is_split_into_words=True,
                          add_special_tokens=False)
@@ -61,7 +83,11 @@ def get_tokens_with_boxes(unnormalized_word_boxes, list_of_words, tokenizer, pad
 
 def apply_ocr(tif_path):
     '''
-    Returns words and its bounding boxes from an image
+    A function to apply OCR on the tif image
+    Arguments:
+        tif_path: The path to the tif image
+    Returns:
+        A dictionary containing the words and the bounding boxes
     '''
     img = Image.open(tif_path).convert("RGB")
 
@@ -81,6 +107,13 @@ def apply_ocr(tif_path):
 
 
 def get_topleft_bottomright_coordinates(df_row):
+    '''
+    A function to get the top left and bottom right coordinates of the bounding box
+    Arguments:
+        df_row: A row of the dataframe
+    Returns:
+        A list of the top left and bottom right coordinates
+    '''
     left, top, width, height = df_row["left"], df_row["top"], df_row["width"], df_row["height"]
     return [left, top, left + width, top + height]
 
@@ -97,14 +130,16 @@ def create_features(
 ):
     '''
     Arguments:
-    img_path: Path to the image
-    tokenizer: The tokenizer used for tokenizing the words
-    target_size: The size to which the image is to be resized
-    max_seq_length: The maximum sequence length of the tokens
-    use_ocr: Whether to use OCR or not
-    bounding_box: The bounding box of the words
-    words: The words in the image
-    pad_token_box: The padding token for the bounding box
+        img_path: Path to the image
+        tokenizer: The tokenizer used for tokenizing the words
+        target_size: The size to which the image is to be resized
+        max_seq_length: The maximum sequence length of the tokens
+        use_ocr: Whether to use OCR or not
+        bounding_box: The bounding box of the words
+        words: The words in the image
+        pad_token_box: The padding token for the bounding box
+    Returns:
+        A list of the image, the bounding box, the tokenized words and the attention mask
     '''
 
     img = Image.open(img_path).convert("RGB")
@@ -136,15 +171,17 @@ class TextVQA(Dataset):
                  pad_token_box=[0, 0, 0, 0], qa_box=[0, 0, 0, 0]):
         '''
         Arguments:
-        base_img_path: The path to the images
-        json_df: The dataframe containing the questions and answers
-        ocr_json_df: The dataframe containing the words and bounding boxes
-        tokenizer: The tokenizer used for tokenizing the words
-        transform: The transforms to be applied to the images
-        max_seq_length: The maximum sequence length of the tokens
-        target_size: The size to which the image is to be resized
-        pad_token_box: The padding token for the bounding box
-        qa_box: The bounding box for the question
+            base_img_path: The path to the images
+            json_df: The dataframe containing the questions and answers
+            ocr_json_df: The dataframe containing the words and bounding boxes
+            tokenizer: The tokenizer used for tokenizing the words
+            transform: The transforms to be applied to the images
+            max_seq_length: The maximum sequence length of the tokens
+            target_size: The size to which the image is to be resized
+            pad_token_box: The padding token for the bounding box
+            qa_box: The bounding box for the question
+        Returns:
+            A dataset object
         '''
 
         self.base_img_path = base_img_path
