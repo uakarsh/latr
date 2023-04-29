@@ -237,6 +237,8 @@ class TextVQA(Dataset):
 
         if self.transform is not None:
             img = self.transform(img)
+            if 'pixel_values' in img.keys():
+                img = img['pixel_values'][0] ## This would be a vit processor
         else:
             img = transforms.ToTensor()(img)
 
