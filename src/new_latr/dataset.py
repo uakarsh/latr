@@ -6,7 +6,7 @@ import pytesseract
 from PIL import Image
 import os
 import numpy as np
-
+import random
 
 def normalize_box(box, width, height, size=1000):
     """
