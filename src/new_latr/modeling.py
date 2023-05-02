@@ -74,7 +74,6 @@ class LaTrForConditionalGeneration(T5ForConditionalGeneration):
             encoder_outputs=None,
             past_key_values=None,
             pixel_values=None,
-            visual_bbox=None,
             labels=None,
             head_mask=None,
             inputs_embeds=None,
@@ -181,7 +180,6 @@ class LaTrForConditionalGeneration(T5ForConditionalGeneration):
             "use_cache": use_cache,
             "bbox": kwargs.get("bbox", None),
             "pixel_values": kwargs.get("pixel_values", None),
-            "visual_bbox": kwargs.get("visual_bbox", None),
         }
 
     def _reorder_cache(self, past_key_values, beam_idx):
