@@ -258,10 +258,11 @@ class TextVQA(Dataset):
         box_pretext = [self.qa_box] * length_pretext
 
         ## For fine-tuning, the authors use boxes[:, 0] = 0, boxes[:, 1] = 0, boxes[:, 2] = 1000, boxes[:, 3] = 1000
-        boxes[:,0] = 0
-        boxes[:,1] = 0
-        boxes[:,2] = 1000
-        boxes[:,3] = 1000
+        for i in range(len(boxes)):
+            boxes[i][0] = 0
+            boxes[i][1] = 0
+            boxes[i][2] = 1000
+            boxes[i][3] = 1000
 
         # Combining all the stuffs
         boxes = box_pretext + boxes
