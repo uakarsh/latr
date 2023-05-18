@@ -259,6 +259,11 @@ class TextVQA(Dataset):
 
         # Converting the boxes as per the format required for model input
         boxes = torch.as_tensor(boxes, dtype=torch.int32)
+        ## Clamping the values of boxes, since there are some entries, which makes width | height negative
+
+        boxes[:, 2] = torch.max(boxes[:, 2], boxes[:, 0])
+        boxes[:, 3] = torch.max(boxes[:, 3], boxes[:, 1])
+
         width = (boxes[:, 2] - boxes[:, 0]).view(-1, 1)
         height = (boxes[:, 3] - boxes[:, 1]).view(-1, 1)
         boxes = torch.cat([boxes, width, height], axis=-1).numpy().tolist()
