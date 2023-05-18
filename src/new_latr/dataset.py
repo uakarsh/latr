@@ -257,6 +257,12 @@ class TextVQA(Dataset):
         length_pretext = len(question_id)
         box_pretext = [self.qa_box] * length_pretext
 
+        ## For fine-tuning, the authors use boxes[:, 0] = 0, boxes[:, 1] = 0, boxes[:, 2] = 1000, boxes[:, 3] = 1000
+        boxes[:,0] = 0
+        boxes[:,1] = 0
+        boxes[:,2] = 1000
+        boxes[:,3] = 1000
+
         # Combining all the stuffs
         boxes = box_pretext + boxes
         tokenized_words = question_id + tokenized_words
