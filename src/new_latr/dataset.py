@@ -214,6 +214,11 @@ class TextVQA(Dataset):
                 'bounding_box']['width'], entry['bounding_box']['height'], entry['bounding_box']['rotation']
             xmin, ymin, w, h = normalize_box([xmin, ymin, w, h], 1, 1, size=1000)
 
+            xmin = max(0, xmin)
+            ymin = max(0, ymin)
+            w = max(0, w)
+            h = max(0, h)
+
             xmax = xmin + w
             ymax = ymin + h
 
@@ -259,14 +264,13 @@ class TextVQA(Dataset):
 
         # Converting the boxes as per the format required for model input
         boxes = torch.as_tensor(boxes, dtype=torch.int32)
+
         ## Clamping the values of boxes, since there are some entries, which makes width | height negative
-
-        boxes[:, 2] = torch.max(boxes[:, 2], boxes[:, 0])
-        boxes[:, 3] = torch.max(boxes[:, 3], boxes[:, 1])
-
         width = (boxes[:, 2] - boxes[:, 0]).view(-1, 1)
         height = (boxes[:, 3] - boxes[:, 1]).view(-1, 1)
-        boxes = torch.cat([boxes, width, height], axis=-1).numpy().tolist()
+        boxes = torch.cat([boxes, width, height], axis=-1)
+        boxes = torch.clamp(boxes, min=0, max=1000)
+        boxes = boxes.numpy().tolist()
 
         # Getting the Answer
         answer = self.tokenizer(random.choice(sample_entry['answers']))['input_ids']
