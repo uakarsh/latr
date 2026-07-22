@@ -1,4 +1,4 @@
 transformers
-sentencepiece==0.1.91
+sentencepiece>=0.1.97
 pytesseract
-Pillow
+Pillow>=10.3.0
